@@ -24,17 +24,24 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+import androidx.core.app.NotificationCompat;
+import android.content.pm.ServiceInfo;
 
 public class Alarm extends Service {
 
 	public static final String EXTRA_SHOW_TOAST = "org.balau.fakedawn.Alarm.EXTRA_SHOW_TOAST";
+	private static final int NOTIFICATION_ID = 1;
 	private static final long TOLERANCE_MILLIS = 1000*10;
 
 	@Override
@@ -48,6 +55,30 @@ public class Alarm extends Service {
 	 */
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		// 1. Créer le canal de notification pour Android 8+
+		String CHANNEL_ID = "fakedawn_service";
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+					"Alarme FakeDawn", NotificationManager.IMPORTANCE_LOW);
+			getSystemService(NotificationManager.class).createNotificationChannel(channel);
+		}
+
+		// 2. Lancer en premier plan (Foreground) pour éviter le crash immédiat
+		Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+				.setContentTitle("FakeDawn")
+				.setContentText("Mise à jour de l'alarme...")
+				.setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+				.build();
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+			startForeground(
+					NOTIFICATION_ID,
+					notification,
+					ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE // Matches the manifest
+			);
+		} else {
+			startForeground(NOTIFICATION_ID, notification);
+		}
 
 		boolean showToast;
 		if(intent != null)
@@ -84,18 +115,25 @@ public class Alarm extends Service {
 			Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 		}
 		// If we get killed, after returning from here, restart
+		stopForeground(true);
 		return START_STICKY;
 	}
-	
+
 	private PendingIntent getOpenDawnPendingIntent()
 	{
-		Intent openDawn = new Intent(AlarmReceiver.ACTION_START_ALARM);
-		PendingIntent openDawnPendingIntent = PendingIntent.getBroadcast(
-				getApplicationContext(), 
-				0, 
+		Intent openDawn = new Intent(this, AlarmReceiver.class);
+		openDawn.setAction(AlarmReceiver.ACTION_START_ALARM);
+
+		int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			flags |= PendingIntent.FLAG_IMMUTABLE; // Obligatoire sur Android 12+
+		}
+
+		return PendingIntent.getBroadcast(
+				getApplicationContext(),
+				0,
 				openDawn,
-				0);
-		return openDawnPendingIntent;
+				flags);
 	}
 	
 	private AlarmManager getAlarmManager()
@@ -178,37 +216,42 @@ public class Alarm extends Service {
 		return nextAlarmTime;
 	}
 	
-	private void set(AlarmManager alarmManager, int type, long triggerAtMillis, PendingIntent operation)
-	{
-    	// API 19 changed set() behaviour and added setExact
-		// https://developer.android.com/reference/android/app/AlarmManager.html#set(int, long, android.app.PendingIntent)
-		// Using setExact if it exists, otherwise fall back to set.
-	    try {
-	        Method setExact = AlarmManager.class.getDeclaredMethod(
-	            "setExact", int.class, long.class, PendingIntent.class);
-	        setExact.invoke(alarmManager, type,
-	        		triggerAtMillis, operation);
-	      } catch (NoSuchMethodException e) {
-	        alarmManager.set(type,
-	        		triggerAtMillis, operation);
-	      } catch (IllegalAccessException e) {
-	        throw new RuntimeException(e);
-	      } catch (IllegalArgumentException e) {
-	        throw new RuntimeException(e);
-	      } catch (InvocationTargetException e) {
-	        throw new RuntimeException(e);
-	      }
-	}
-	
-	private void set(Calendar nextAlarmTime)
-	{
+	private void set(Calendar nextAlarmTime) {
 		AlarmManager alarmManager = getAlarmManager();
 		PendingIntent openDawnIntent = getOpenDawnPendingIntent();
-		set(
-				alarmManager,
-				AlarmManager.RTC_WAKEUP, 
-				nextAlarmTime.getTimeInMillis(), 
-				openDawnIntent);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+					nextAlarmTime.getTimeInMillis(), openDawnIntent);
+		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			alarmManager.setExact(AlarmManager.RTC_WAKEUP,
+					nextAlarmTime.getTimeInMillis(), openDawnIntent);
+		} else {
+			alarmManager.set(AlarmManager.RTC_WAKEUP,
+					nextAlarmTime.getTimeInMillis(), openDawnIntent);
+		}
+	}
+
+	private void set(AlarmManager alarmManager, int type, long triggerAtMillis, PendingIntent operation)
+	{
+		// API 19 changed set() behaviour and added setExact
+		// https://developer.android.com/reference/android/app/AlarmManager.html#set(int, long, android.app.PendingIntent)
+		// Using setExact if it exists, otherwise fall back to set.
+		try {
+			Method setExact = AlarmManager.class.getDeclaredMethod(
+					"setExact", int.class, long.class, PendingIntent.class);
+			setExact.invoke(alarmManager, type,
+					triggerAtMillis, operation);
+		} catch (NoSuchMethodException e) {
+			alarmManager.set(type,
+					triggerAtMillis, operation);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalArgumentException e) {
+			throw new RuntimeException(e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private String getPlural(long n, String name)

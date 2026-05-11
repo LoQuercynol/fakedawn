@@ -5,11 +5,9 @@ package org.balau.fakedawn.test;
 
 import org.balau.fakedawn.Preferences;
 
-import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.widget.Button;
 
 /**
  * @author francesco

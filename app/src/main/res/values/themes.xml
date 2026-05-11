@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Thème principal de l'application -->
+    <style name="Theme.FakeDawn" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#FF9800</item>
+    </style>
+
+    <!-- Thème spécifique pour l'écran de réveil (Dawn.java) -->
+    <style name="Theme.FakeDawn.FullScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+
+        <!-- Correction : on retire windowLayoutInScreen qui pose problème
+             et on utilise des attributs plus standards -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+
+        <!-- Pour Android 9+ (API 28+) : Utilise toute la zone même sous l'encoche -->
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="28">shortEdges</item>
+    </style>
+</resources>
