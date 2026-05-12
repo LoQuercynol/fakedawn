@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--supports-screens android:xlargeScreens="true" android:largeScreens="true"/-->
 
     <application
@@ -34,6 +35,8 @@
             android:theme="@style/Theme.FakeDawn.FullScreen"
             android:exported="false"
             android:taskAffinity="@string/affinity_dawn"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"></activity>
         <receiver android:name=".StartAtBoot" android:exported="true">

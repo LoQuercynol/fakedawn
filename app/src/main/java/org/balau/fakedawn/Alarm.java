@@ -56,7 +56,7 @@ public class Alarm extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// 1. Créer le canal de notification pour Android 8+
-		String CHANNEL_ID = "fakedawn_service";
+		/* String CHANNEL_ID = "fakedawn_service";
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
 					"Alarme FakeDawn", NotificationManager.IMPORTANCE_LOW);
@@ -78,7 +78,7 @@ public class Alarm extends Service {
 			);
 		} else {
 			startForeground(NOTIFICATION_ID, notification);
-		}
+		} */
 
 		boolean showToast;
 		if(intent != null)
@@ -103,6 +103,10 @@ public class Alarm extends Service {
 			{
 				set(nextAlarmTime);
 				message = nextAlarmMessage(nextAlarmTime);
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("E dd/MM HH:mm", java.util.Locale.getDefault());
+				String timeLabel = sdf.format(nextAlarmTime.getTime());
+				showNotification(timeLabel);
+				return START_STICKY;
 			}
 		}
 		else
@@ -117,6 +121,43 @@ public class Alarm extends Service {
 		// If we get killed, after returning from here, restart
 		stopForeground(true);
 		return START_STICKY;
+	}
+
+	private void showNotification(String nextAlarmStr) {
+		// 1. Créer le canal de notification pour Android 8+
+		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		String CHANNEL_ID = "fakedawn_service";
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+					"Alarme FakeDawn", NotificationManager.IMPORTANCE_LOW);
+			nm.createNotificationChannel(channel);
+		}
+
+		Intent intent = new Intent(this, Preferences.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+		int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			flags |= PendingIntent.FLAG_IMMUTABLE;
+		}
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, flags);
+
+		// 2. Lancer en premier plan (Foreground) pour éviter le crash immédiat
+		NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+				.setContentTitle("FakeDawn Activé")
+				.setContentText("Prochain réveil : " + nextAlarmStr)
+				.setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+				.setOngoing(true)
+				.setContentIntent(pendingIntent)
+				.setPriority(NotificationCompat.PRIORITY_LOW);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+			startForeground(NOTIFICATION_ID, notification.build(),
+					android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+		} else {
+			startForeground(NOTIFICATION_ID, notification.build());
+		}
 	}
 
 	private PendingIntent getOpenDawnPendingIntent()
