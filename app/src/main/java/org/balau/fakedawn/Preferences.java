@@ -326,15 +326,6 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 	}
 
 	private void savePreferences() {
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-			android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(Context.ALARM_SERVICE);
-			if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
-				// Si on n'a pas le droit, on envoie l'utilisateur dans les réglages
-				Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-				startActivity(intent);
-				return; // On ne sauvegarde pas tant qu'on n'a pas la permission
-			}
-		}
 		SharedPreferences pref = getSharedPreferences("main", MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 		// 1. Calcul de l'heure de début absolue (le plus tôt entre lumière et son)
@@ -378,6 +369,16 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 		ToggleButton alarmEnabled = findViewById(R.id.toggleButtonAlarmEnabled);
 		if (alarmEnabled != null) {
 			editor.putBoolean("enabled", alarmEnabled.isChecked());
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+				android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(Context.ALARM_SERVICE);
+				if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
+					// Si on n'a pas le droit, on envoie l'utilisateur dans les réglages
+					Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
+							Uri.parse("package:" + getPackageName()));
+					startActivity(intent);
+					// return; // On ne sauvegarde pas tant qu'on n'a pas la permission
+				}
+			}
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				if (!Settings.canDrawOverlays(this)) {
 					Toast.makeText(this, "Autorisez 'Afficher sur d'autres applis' pour que le réveil puisse s'ouvrir", Toast.LENGTH_LONG).show();

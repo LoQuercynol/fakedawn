@@ -152,10 +152,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 			String CHANNEL_ID = "fakedawn_alarm";
 
 			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-				NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
 				// On vérifie si le canal existe déjà
-				if (nm.getNotificationChannel(CHANNEL_ID) == null) {
+				if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
 					NotificationChannel channel = new NotificationChannel(
 							CHANNEL_ID,
 							"Réveil FakeDawn",
@@ -169,7 +167,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 					channel.enableVibration(false);
 					channel.setSound(null, null);
 
-					nm.createNotificationChannel(channel);
+					notificationManager.createNotificationChannel(channel);
 				}
 			}
 			notificationManager.notify(2, builder.build());

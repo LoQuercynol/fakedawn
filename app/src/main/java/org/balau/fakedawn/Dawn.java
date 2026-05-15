@@ -49,12 +49,10 @@ public class Dawn extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		// 1. Luminosité au minimum immédiatement
 		WindowManager.LayoutParams lp = getWindow().getAttributes();
 		lp.screenBrightness = 0.01f;
 		getWindow().setAttributes(lp);
-		super.onCreate(savedInstanceState);
 
 		// 1. Gestion du réveil de l'écran (Indispensable pour Android 14)
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -75,6 +73,7 @@ public class Dawn extends Activity {
 						| View.SYSTEM_UI_FLAG_FULLSCREEN
 						| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.predawn);
 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		if (nm != null) nm.cancel(2); // AlarmReceiver.NOTIFICATION_ALARM_RUNNING_ID);
@@ -119,6 +118,7 @@ public class Dawn extends Activity {
 				soundHandler.postDelayed(stopSoundRunnable, pref.getInt("sound_duration", 15) * 60 * 1000L);
 			}
 		}, pref.getInt("light_pre_delay", 15) * 60 * 1000L);
+		// if (nm != null) nm.cancel(2); // AlarmReceiver.NOTIFICATION_ALARM_RUNNING_ID);
 		startColorAnimation(root);
 	}
 
