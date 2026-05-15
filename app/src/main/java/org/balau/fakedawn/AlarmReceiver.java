@@ -128,7 +128,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 			Log.d("FakeDawn", "Starting Dawn Activity."); */
 			// 1. Créer l'intention pour l'écran de réveil
 			Intent dawnIntent = new Intent(context, Dawn.class);
-			dawnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+			dawnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+					| Intent.FLAG_ACTIVITY_NO_USER_ACTION
+					| Intent.FLAG_ACTIVITY_SINGLE_TOP
+					| Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
 			// 2. Créer le PendingIntent (obligatoire pour la notification)
 			int flags = PendingIntent.FLAG_UPDATE_CURRENT;
@@ -138,18 +141,18 @@ public class AlarmReceiver extends BroadcastReceiver {
 			PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, 0, dawnIntent, flags);
 
 			// 3. Créer la notification de réveil
-			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "fakedawn_alarm")
+			String CHANNEL_ID = "fakedawn_alarm";
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
 					.setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
 					.setContentTitle("Réveil FakeDawn")
 					.setContentText("L'alarme est en cours...")
 					.setPriority(NotificationCompat.PRIORITY_MAX)
 					.setCategory(NotificationCompat.CATEGORY_ALARM)
-					.setFullScreenIntent(fullScreenPendingIntent, true); // <--- C'est ici que la magie opère
+					.setFullScreenIntent(fullScreenPendingIntent, true);
 
 			// 4. Envoyer la notification
 			NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 			// Identifiant du canal (doit correspondre à celui utilisé dans le Builder)
-			String CHANNEL_ID = "fakedawn_alarm";
 
 			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 				// On vérifie si le canal existe déjà
@@ -171,7 +174,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 				}
 			}
 			notificationManager.notify(2, builder.build());
-			// context.startActivity(openDawn);
+			context.startActivity(dawnIntent);
 			//TODO: start sound service?
 		}
 		else if(intent.getAction().equals(ACTION_STOP_ALARM))
