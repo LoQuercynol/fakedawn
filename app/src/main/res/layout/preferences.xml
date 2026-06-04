@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#F5F5F5" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,7 +47,9 @@
                     android:gravity="center"
                     android:text="07:15"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="24sp" />
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+ />
 
                 <!--TextView
                     android:layout_width="wrap_content"
@@ -67,6 +71,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/containerAlarmHours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -76,7 +81,8 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/sunrise" />
+                    android:src="@drawable/sunrise"
+                    app:tint="#FF9800" />
 
                 <TextView
                     android:id="@+id/txtLightStart"
@@ -102,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="30 min"
+                    android:text="15 min"
                     android:textSize="24sp"
                     android:textColor="?android:attr/textColorPrimary"
                     android:background="?android:attr/selectableItemBackground"
@@ -120,128 +126,19 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="30 min"
+                    android:text="15 min"
                     android:textSize="24sp"
                     android:textColor="?android:attr/textColorPrimary"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true" />
             </LinearLayout>
-
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/sound" />
-
-                <CheckBox
-                    android:id="@+id/checkBoxSoundEnabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp" />
-
-                <TextView
-                     android:id="@+id/txtSoundDuration"
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:background="?android:attr/selectableItemBackground"
-                     android:clickable="true"
-                     android:gravity="center"
-                     android:text="15 min"
-                     android:textColor="?android:attr/textColorPrimary"
-                     android:textSize="24sp" />
-            </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/containerSoundOptions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                    android:id="@+id/buttonSound"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="Silent" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:text="Volume"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <SeekBar
-                    android:id="@+id/seekBarVolume"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp" />
-
-                <TextView
-                    android:id="@+id/TextView01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:text="Vibration"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <ToggleButton
-                    android:id="@+id/toggleButtonVibrate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="ToggleButton"
-                    android:textOff="Disactivated"
-                    android:textOn="Activated with Sound" />
-
-        </LinearLayout>
-
-            <TextView
-                android:text="Dismiss method"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="20dp" />
-
-            <ToggleButton
-                android:text="ToggleButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/toggleButtonUseDismiss"
-                android:textOff="Touch the screen"
-                android:textOn="Press dismiss button"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="Week Days"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <LinearLayout
+                android:id="@+id/containerAlarmDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" >
+                android:layout_marginRight="20dp"
+                android:gravity="center" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -302,6 +199,96 @@
                         android:text="Sundays" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/containerSoundEnable"
+                android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/sound" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxSoundEnabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/containerSoundOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                    android:id="@+id/buttonSound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Silent" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="Volume"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <SeekBar
+                    android:id="@+id/seekBarVolume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp" />
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="Vibration"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButtonVibrate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="ToggleButton"
+                    android:textOff="Disactivated"
+                    android:textOn="Activated with Sound" />
+
+        </LinearLayout>
+
+            <TextView
+                android:text="Dismiss method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textDismissMethod"
+                android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="20dp" />
+
+            <ToggleButton
+                android:text="ToggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/toggleButtonUseDismiss"
+                android:textOff="Touch the screen"
+                android:textOn="Press dismiss button"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
         </LinearLayout>
     </ScrollView>
 

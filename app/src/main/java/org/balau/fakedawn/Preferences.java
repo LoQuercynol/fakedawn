@@ -44,6 +44,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -63,21 +64,20 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 	private int lightPostDelayMinutes = 15;
 	private int lightDuration = lightPreDelayMinutes + lightPostDelayMinutes;
 	private int soundStartH = 7, soundStartM = 15;
-	private int soundDuration = 15;
 	private CheckBox m_checkBoxSoundEnabled;
-	private LinearLayout m_containerSoundOptions;
+	private LinearLayout m_containerSoundOptions, m_containerAlarmHours, m_containerAlarmDays, m_containerSoundEnable;
+	private ToggleButton m_toggleButtonAlarmEnabled, m_toggleButtonUseDismiss;
 	private static final int REQUEST_PICK_SOUND = 0;
 	private Uri m_soundUri;
 	private HelpListener m_helpListener = new HelpListener();
 
-	private TextView txtLightStart, txtLightPreDelay, txtLightPostDelay, txtSoundStart, txtSoundDuration;
+	private TextView txtLightStart, txtLightPreDelay, txtLightPostDelay, txtSoundStart, textDismissMethod;
 
 	private void updateLabels() {
 		if (txtLightStart != null) txtLightStart.setText(String.format("%02d:%02d", lightStartH, lightStartM));
 		if (txtLightPreDelay != null) txtLightPreDelay.setText(lightPreDelayMinutes + " min");
 		if (txtLightPostDelay != null) txtLightPostDelay.setText(lightPostDelayMinutes + " min");
 		if (txtSoundStart != null) txtSoundStart.setText(String.format("%02d:%02d", soundStartH, soundStartM));
-		if (txtSoundDuration != null) txtSoundDuration.setText(soundDuration + " min");
 	}
 
 	@Override
@@ -89,14 +89,21 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 		txtLightPreDelay = findViewById(R.id.txtLightPreDelay);
 		txtLightPostDelay = findViewById(R.id.txtLightPostDelay);
 		txtSoundStart = findViewById(R.id.txtSoundStart);
-		txtSoundDuration = findViewById(R.id.txtSoundDuration);
+		m_toggleButtonUseDismiss = findViewById(R.id.toggleButtonUseDismiss);
+		textDismissMethod = findViewById(R.id.textDismissMethod);
 		m_checkBoxSoundEnabled = findViewById(R.id.checkBoxSoundEnabled);
+		m_containerSoundEnable = findViewById(R.id.containerSoundEnable);
 		m_containerSoundOptions = findViewById(R.id.containerSoundOptions);
-		final TextView txtSoundDuration = findViewById(R.id.txtSoundDuration);
+		m_containerAlarmHours = findViewById(R.id.containerAlarmHours);
+		m_containerAlarmDays = findViewById(R.id.containerAlarmDays);
+		m_toggleButtonAlarmEnabled = findViewById(R.id.toggleButtonAlarmEnabled);
 
 		m_checkBoxSoundEnabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
 			// Active/Désactive le container et le texte de durée
 			updateSoundUI(isChecked);
+		});
+		if(m_toggleButtonAlarmEnabled != null) m_toggleButtonAlarmEnabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
+			updateGlobalUI(isChecked);
 		});
 		// Liaison des clics
 		/*if(txtLightStart != null) txtLightStart.setOnClickListener(this);
@@ -109,8 +116,8 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 				lightStartH = hour;
 				lightStartM = minute;
 				// Formule : Sound = Light + PreDelay
-				soundStartH = (lightStartH * 60 + lightStartM + lightPreDelayMinutes) % 1440 / 60;
-				soundStartM = (lightStartH * 60 + lightStartM + lightPreDelayMinutes) % 1440 % 60;
+				lightStartH = (soundStartH * 60 + soundStartM - lightPreDelayMinutes) % 1440 / 60;
+				lightStartM = (soundStartH * 60 + soundStartM - lightPreDelayMinutes) % 1440 % 60;
 				updateLabels();
 			});
 		});
@@ -146,7 +153,6 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 				updateLabels();
 			});
 		});
-		if(txtSoundDuration != null) txtSoundDuration.setOnClickListener(this);
 
 		// Liaison des boutons standards
 		findViewById(R.id.buttonSave).setOnClickListener(this);
@@ -162,7 +168,6 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 	private void updateSoundUI(boolean enabled) {
 		// Grise ou active les composants
 		m_containerSoundOptions.setEnabled(enabled);
-		findViewById(R.id.txtSoundDuration).setEnabled(enabled);
 		findViewById(R.id.buttonSound).setEnabled(enabled);
 		findViewById(R.id.seekBarVolume).setEnabled(enabled);
 		findViewById(R.id.toggleButtonVibrate).setEnabled(enabled);
@@ -170,7 +175,37 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 		// Change l'opacité pour l'effet visuel "grisé"
 		float alpha = enabled ? 1.0f : 0.4f;
 		m_containerSoundOptions.setAlpha(alpha);
-		findViewById(R.id.txtSoundDuration).setAlpha(alpha);
+	}
+
+	private void updateGlobalUI(boolean enabled) {
+		// Liste des vues à griser/désactiver
+		View[] viewsToToggle = {
+				m_containerAlarmHours, m_containerAlarmDays,txtSoundStart,
+				m_containerSoundOptions, m_containerSoundEnable, textDismissMethod, m_toggleButtonUseDismiss
+		};
+
+		float alpha = enabled ? 1.0f : 0.4f;
+		for (View v : viewsToToggle) {
+			if (v != null) {
+				v.setAlpha(alpha);
+				setRecursiveEnabled(v, enabled);
+			}
+		}
+
+		// Si l'alarme est activée, on respecte aussi l'état de la checkbox Sound
+		if (enabled) {
+			updateSoundUI(m_checkBoxSoundEnabled.isChecked());
+		}
+	}
+
+	private void setRecursiveEnabled(View view, boolean enabled) {
+		view.setEnabled(enabled);
+		if (view instanceof ViewGroup) {
+			ViewGroup group = (ViewGroup) view;
+			for (int i = 0; i < group.getChildCount(); i++) {
+				setRecursiveEnabled(group.getChildAt(i), enabled);
+			}
+		}
 	}
 
 	@Override
@@ -223,11 +258,14 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 		int sStart = globalStart + lightPreDelayMinutes; // globalStart + pref.getInt("sound_start", 15);
 		soundStartH = sStart / 60;
 		soundStartM = sStart % 60;
-		soundDuration = pref.getInt("sound_duration", 15);
 
 		// --- 2. État Global et Volume ---
 		ToggleButton alarmEnabled = findViewById(R.id.toggleButtonAlarmEnabled);
-		if (alarmEnabled != null) alarmEnabled.setChecked(pref.getBoolean("enabled", true));
+		if (alarmEnabled != null) {
+			boolean isEnabled = pref.getBoolean("enabled", true);
+			alarmEnabled.setChecked(pref.getBoolean("enabled", true));
+			updateGlobalUI(isEnabled);
+		}
 
 		boolean soundMaster = pref.getBoolean("sound_master_enabled", true);
 		m_checkBoxSoundEnabled.setChecked(soundMaster);
@@ -301,11 +339,6 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 				soundStartH = h; soundStartM = m;
 				updateLabels();
 			});
-		} else if (id == R.id.txtSoundDuration) {
-			showDurationPicker(soundDuration, (val) -> {
-				soundDuration = val;
-				updateLabels();
-			});
 		}
 	}
 
@@ -341,7 +374,6 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 		editor.putInt("light_pre_delay", lightPreDelayMinutes);
 		editor.putInt("light_post_delay", lightPostDelayMinutes);
 
-		editor.putInt("sound_duration", soundDuration);
 		editor.putBoolean("sound_master_enabled", m_checkBoxSoundEnabled.isChecked());
 
 		// 4. Jours de la semaine

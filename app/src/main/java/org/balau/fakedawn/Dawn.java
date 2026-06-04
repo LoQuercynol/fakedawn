@@ -99,7 +99,7 @@ public class Dawn extends Activity {
 					vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 					if (vibrator != null && vibrator.hasVibrator()) {
 						// Vibration : 0ms pause, 500ms vibre, 500ms pause... (en boucle)
-						long[] pattern = {0, 500, 10000};
+						long[] pattern = {0, 1000, 10000};
 						vibrator.vibrate(pattern, 0); // 0 = répéter indéfiniment
 					}
 				}
