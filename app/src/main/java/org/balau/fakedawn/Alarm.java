@@ -1,5 +1,6 @@
 /**
  *   Copyright 2012 Francesco Balducci
+ *   Copyright 2026 Olivier Vialatte
  *
  *   This file is part of FakeDawn.
  *
@@ -130,7 +131,7 @@ public class Alarm extends Service {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-					"Alarme FakeDawn", NotificationManager.IMPORTANCE_LOW);
+					getString(R.string.alarme_fakeDawn), NotificationManager.IMPORTANCE_LOW);
 			nm.createNotificationChannel(channel);
 		}
 
@@ -145,8 +146,8 @@ public class Alarm extends Service {
 
 		// 2. Lancer en premier plan (Foreground) pour éviter le crash immédiat
 		NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-				.setContentTitle("FakeDawn Activé")
-				.setContentText("Prochain réveil : " + nextAlarmStr)
+				.setContentTitle(getString(R.string.fakedawn_activated))
+				.setContentText(getString(R.string.next_alarm) + nextAlarmStr)
 				.setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
 				.setOngoing(true)
 				.setContentIntent(pendingIntent)

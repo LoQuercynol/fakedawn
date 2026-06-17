@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World!</string>
-    <string name="app_name">Fake Dawn</string>
-    <string name="affinity_preferences">org.balau.fakedawn.Preferences</string>
-    <string name="affinity_dawn">org.balau.fakedawn.Dawn</string>
+    <string name="app_name" translatable="false">FakeDawn</string>
+    <string name="affinity_preferences" translatable="false">org.balau.fakedawn.Preferences</string>
+    <string name="affinity_dawn" translatable="false">org.balau.fakedawn.Dawn</string>
     <string name="dismiss">Dismiss</string>
+    <string name="alarm_enabled">Alarm is Activated</string>
+    <string name="alarm_disabled">Alarm is Deactivated</string>
+    <string name="sunrise_schedule">Sunrise Schedule</string>
+    <string name="vibration_on">Vibration On</string>
+    <string name="vibration_off">Vibration Off</string>
+    <string name="toast_permission_overlay">Please allow Overlay permission</string>
+    <string name="toast_permission_notification">Please allow Notification permission</string>
+    <string name="toast_permission_alarm">Please allow Alarm permission</string>
+    <string name="toast_permission_sound">Please allow Sound permission</string>
+    <string name="toast_permission_vibrate">Please allow Vibrate permission</string>
+    <string name="Mondays">Mondays</string>
+    <string name="Tuesdays">Tuesdays</string>
+    <string name="Wednesdays">Wednesdays</string>
+    <string name="Thursdays">Thursdays</string>
+    <string name="Fridays">Fridays</string>
+    <string name="Saturdays">Saturdays</string>
+    <string name="Sundays">Sundays</string>
+    <string name="Silent">Silent</string>
+    <string name="Volume">Volume</string>
+    <string name="Vibration">Vibration</string>
+    <string name="DismissMethod">Dismiss Method</string>
+    <string name="TouchTheScreen">Touch the screen</string>
+    <string name="PressDismissButton">Press Dismiss Button</string>
+    <string name="buttonSave">Save</string>
+    <string name="Discard">Discard</string>
+    <string name="Disactivated">Disactivated</string>
+    <string name="ActivatedWithSound">Activated with sound</string>
+    <string name="sound_selected">Sound Selected</string>
+    <string name="overlay_permission">Allow « Overlay Permission » to allow fakedawn to start</string>
+    <string name="fakedawn_clock">FakeDawn Clock</string>
+    <string name="alarm_started">Alarme is running...</string>
+    <string name="fakedawn_activated">FakeDawn Activated</string>
+    <string name="next_alarm">"Next alarm : "</string>
+    <string name="alarme_fakeDawn">FakeDawn Alarm</string>
 
 </resources>

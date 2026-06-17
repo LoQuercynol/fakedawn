@@ -1,5 +1,6 @@
 /**
  *   Copyright 2012 Francesco Balducci
+ *   Copyright 2026 Olivier Vialatte
  *
  *   This file is part of FakeDawn.
  *

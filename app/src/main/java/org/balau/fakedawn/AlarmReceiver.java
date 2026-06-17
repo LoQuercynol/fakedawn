@@ -1,5 +1,6 @@
 /**
  *   Copyright 2012 Francesco Balducci
+ *   Copyright 2026 Olivier Vialatte
  *
  *   This file is part of FakeDawn.
  *
@@ -144,8 +145,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 			String CHANNEL_ID = "fakedawn_alarm";
 			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
 					.setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-					.setContentTitle("Réveil FakeDawn")
-					.setContentText("L'alarme est en cours...")
+					.setContentTitle(context.getString(R.string.fakedawn_clock))
+					.setContentText(context.getString(R.string.alarm_started))
 					.setPriority(NotificationCompat.PRIORITY_MAX)
 					.setCategory(NotificationCompat.CATEGORY_ALARM)
 					.setFullScreenIntent(fullScreenPendingIntent, true);

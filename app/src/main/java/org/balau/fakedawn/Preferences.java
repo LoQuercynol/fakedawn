@@ -1,5 +1,6 @@
 /**
  *   Copyright 2012 Francesco Balducci
+ *   Copyright 2026 Olivier Vialatte
  *
  *   This file is part of FakeDawn.
  *
@@ -234,10 +235,10 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 			if (ringtone != null) {
 				buttonSound.setText(ringtone.getTitle(this));
 			} else {
-				buttonSound.setText("Sound Selected");
+				buttonSound.setText(getString(R.string.sound_selected));
 			}
 		} else {
-			buttonSound.setText("Silent");
+			buttonSound.setText(getString(R.string.Silent));
 		}
 	}
 
@@ -413,7 +414,7 @@ public class Preferences extends Activity implements OnClickListener, OnSeekBarC
 			}
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				if (!Settings.canDrawOverlays(this)) {
-					Toast.makeText(this, "Autorisez 'Afficher sur d'autres applis' pour que le réveil puisse s'ouvrir", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, getString(R.string.overlay_permission), Toast.LENGTH_LONG).show();
 					Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
 							Uri.parse("package:" + getPackageName()));
 					startActivity(intent);

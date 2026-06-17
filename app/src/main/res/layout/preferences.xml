@@ -22,8 +22,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="ToggleButton"
-                android:textOff="Alarm is Disactivated"
-                android:textOn="Alarm is Activated" />
+                android:textOff="@string/alarm_disabled"
+                android:textOn="@string/alarm_enabled" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -150,35 +150,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Mondays" />
+                        android:text="@string/Mondays" />
 
                     <CheckBox
                         android:id="@+id/checkBoxTuesdays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Tuesdays" />
+                        android:text="@string/Tuesdays" />
 
                     <CheckBox
                         android:id="@+id/checkBoxWednesdays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Wednesdays" />
+                        android:text="@string/Wednesdays" />
 
                     <CheckBox
                         android:id="@+id/checkBoxThursdays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Thursdays" />
+                        android:text="@string/Thursdays" />
 
                     <CheckBox
                         android:id="@+id/checkBoxFridays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Fridays" />
+                        android:text="@string/Fridays" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,13 +190,13 @@
                         android:id="@+id/checkBoxSaturdays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Saturdays" />
+                        android:text="@string/Saturdays" />
 
                     <CheckBox
                         android:id="@+id/checkBoxSundays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sundays" />
+                        android:text="@string/Sundays" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -231,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:text="Silent" />
+                    android:text="@string/Silent" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:text="Volume"
+                    android:text="@string/Volume"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <SeekBar
@@ -255,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:text="Vibration"
+                    android:text="@string/Vibration"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <ToggleButton
@@ -265,13 +265,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text="ToggleButton"
-                    android:textOff="Disactivated"
-                    android:textOn="Activated with Sound" />
+                    android:textOff="@string/Disactivated"
+                    android:textOn="@string/ActivatedWithSound" />
 
         </LinearLayout>
 
             <TextView
-                android:text="Dismiss method"
+                android:text="@string/DismissMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textDismissMethod"
@@ -284,8 +284,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/toggleButtonUseDismiss"
-                android:textOff="Touch the screen"
-                android:textOn="Press dismiss button"
+                android:textOff="@string/TouchTheScreen"
+                android:textOn="@string/PressDismissButton"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp" />
 
@@ -302,14 +302,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Set Dawn" />
+            android:text="@string/buttonSave" />
 
         <Button
             android:id="@+id/buttonDiscard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Discard" />
+            android:text="@string/Discard" />
     </LinearLayout>
 
 </LinearLayout>
