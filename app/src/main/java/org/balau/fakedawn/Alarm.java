@@ -98,7 +98,7 @@ public class Alarm extends Service {
 			Calendar nextAlarmTime = getNextAlarmTime();
 			if (nextAlarmTime == null)
 			{
-				message = "No week day selected! Fake Dawn Alarm Disabled.";	
+				message = getString(R.string.No_week_day_selected) + getString(R.string.app_name) + getString(R.string.alarm_disabled);
 			}
 			else
 			{
@@ -112,7 +112,7 @@ public class Alarm extends Service {
 		}
 		else
 		{
-			message = "Fake Dawn Alarm Disabled.";
+			message = getString(R.string.app_name) + getString(R.string.alarm_disabled);
 		}
 		Log.d("FakeDawn", message);
 		if(showToast)

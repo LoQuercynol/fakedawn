@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/drawable-mdpi_ic_launcher.png.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/drawable-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/layout_predawn.xml.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/layout/predawn.xml"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/drawable_sound.png.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/drawable/sound.png"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/drawable-hdpi_ic_launcher.png.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/drawable-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/drawable-xhdpi_ic_launcher.png.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/drawable-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/drawable_sunrise.png.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/drawable/sunrise.png"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/layout_preferences.xml.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/layout/preferences.xml"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/layout_license.xml.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/layout/license.xml"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/layout_dawn.xml.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/layout/dawn.xml"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/raw_license.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/raw/license"
+    },
+    {
+        "merged": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-merged_res-39:/drawable-ldpi_ic_launcher.png.flat",
+        "source": "/home/vialatol/.gradle/daemon/8.7/org.balau.fakedawn.app-main-41:/drawable-ldpi/ic_launcher.png"
+    },
+    {
+        "merged": "org.balau.fakedawn.app-merged_res-39:/layout_preferences.xml.flat",
+        "source": "org.balau.fakedawn.app-main-41:/layout/preferences.xml"
+    }
+]

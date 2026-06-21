@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alarm_disabled">Allarme disattivato</string>
+    <string name="alarm_enabled">Allarme attivato</string>
+    <string name="alarm_started">Sveglia in corso…</string>
+    <string name="app_name">FakeDawn</string>
+    <string name="day_fri">Ven</string>
+    <string name="day_mon">Lun</string>
+    <string name="day_sat">Sab</string>
+    <string name="day_sun">Dom</string>
+    <string name="day_thu">Gio</string>
+    <string name="day_tue">Mar</string>
+    <string name="day_wed">Mer</string>
+    <string name="duration_format">%1$d min</string>
+    <string name="enable_sound">Abilita suono</string>
+    <string name="fakedawn_clock">Orologio FakeDawn</string>
+    <string name="post_dawn">Post-alba</string>
+    <string name="pre_dawn">Pre-alba</string>
+    <string name="repeat_days">Giorni di ripetizione</string>
+    <string name="select_ringtone">Seleziona suoneria</string>
+    <string name="sound_vibration">Suono e Vibrazione</string>
+    <string name="stop_button">Pulsante per fermare</string>
+    <string name="stop_method">Metodo di arresto</string>
+    <string name="stop_touch">Tocca lo schermo per fermare</string>
+    <string name="sunrise_schedule">Programmazione dell\'alba</string>
+    <string name="toast_permission_alarm">Per favore, autorizza il permesso per le sveglie precise</string>
+    <string name="toast_permission_overlay">Per favore, autorizza il permesso di sovrapposizione</string>
+    <string name="vibration_off">Vibrazione disattivata</string>
+    <string name="vibration_on">Vibrazione attiva</string>
+    <string name="volume_label">Volume</string>
+</resources>
