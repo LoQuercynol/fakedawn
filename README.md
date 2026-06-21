@@ -4,6 +4,7 @@ FakeDawn
 Android app: an artificial dawn alarm to help you wake up gently in the morning.
 
 Copyright (C) 2012 Francesco Balducci
+Copyright 2026 Olivier Vialatte
 
   Copying and distribution of this file, with or without modification,
   are permitted in any medium without royalty provided the copyright
