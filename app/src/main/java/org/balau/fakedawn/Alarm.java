@@ -44,7 +44,7 @@ public class Alarm extends Service {
 	public static final String EXTRA_SHOW_TOAST = "org.balau.fakedawn.Alarm.EXTRA_SHOW_TOAST";
 	private static final int NOTIFICATION_ID = 1;
 	private static final long TOLERANCE_MILLIS = 1000*10;
-
+	public static final String EXTRA_SKIP_NEXT = "org.balau.fakedawn.Alarm.EXTRA_SKIP_NEXT";
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -56,31 +56,17 @@ public class Alarm extends Service {
 	 */
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// 1. Créer le canal de notification pour Android 8+
-		/* String CHANNEL_ID = "fakedawn_service";
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-					"Alarme FakeDawn", NotificationManager.IMPORTANCE_LOW);
-			getSystemService(NotificationManager.class).createNotificationChannel(channel);
+		SharedPreferences pref = getPreferences();
+		boolean skipAction = intent != null && intent.getBooleanExtra(EXTRA_SKIP_NEXT, false);
+
+		int skipCount = pref.getInt("skip_count", 0);
+		if (skipAction) {
+			skipCount++;
+			pref.edit().putInt("skip_count", skipCount).apply();
+		} else if (intent != null && !intent.hasExtra(EXTRA_SKIP_NEXT)) {
+			skipCount = 0;
+			pref.edit().putInt("skip_count", 0).apply();
 		}
-
-		// 2. Lancer en premier plan (Foreground) pour éviter le crash immédiat
-		Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-				.setContentTitle("FakeDawn")
-				.setContentText("Mise à jour de l'alarme...")
-				.setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-				.build();
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-			startForeground(
-					NOTIFICATION_ID,
-					notification,
-					ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE // Matches the manifest
-			);
-		} else {
-			startForeground(NOTIFICATION_ID, notification);
-		} */
-
 		boolean showToast;
 		if(intent != null)
 		{
@@ -95,7 +81,7 @@ public class Alarm extends Service {
 		String message;
 		if(getPreferences().getBoolean("enabled", false))
 		{
-			Calendar nextAlarmTime = getNextAlarmTime();
+			Calendar nextAlarmTime = getNextAlarmTime(skipCount);
 			if (nextAlarmTime == null)
 			{
 				message = getString(R.string.No_week_day_selected) + getString(R.string.app_name) + getString(R.string.alarm_disabled);
@@ -144,6 +130,15 @@ public class Alarm extends Service {
 		}
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, flags);
 
+		Intent skipIntent = new Intent(this, AlarmReceiver.class);
+		skipIntent.setAction(AlarmReceiver.ACTION_SKIP_ALARM);
+
+		int pFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			pFlags |= PendingIntent.FLAG_IMMUTABLE;
+		}
+		PendingIntent skipPendingIntent = PendingIntent.getBroadcast(this, 0, skipIntent, pFlags);
+
 		// 2. Lancer en premier plan (Foreground) pour éviter le crash immédiat
 		NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID)
 				.setContentTitle(getString(R.string.fakedawn_activated))
@@ -151,7 +146,8 @@ public class Alarm extends Service {
 				.setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
 				.setOngoing(true)
 				.setContentIntent(pendingIntent)
-				.setPriority(NotificationCompat.PRIORITY_LOW);
+				.setPriority(NotificationCompat.PRIORITY_LOW)
+				.addAction(android.R.drawable.ic_menu_revert, getString(R.string.skip), skipPendingIntent);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
 			startForeground(NOTIFICATION_ID, notification.build(),
@@ -232,7 +228,7 @@ public class Alarm extends Service {
 		return shouldFire(getPreferences(), dayOfWeek);
 	}
 	
-	private Calendar getNextAlarmTime()
+	private Calendar getNextAlarmTime(int skipOccurrences)
 	{
 		SharedPreferences pref = getPreferences();
 		Calendar nextAlarmTime = Calendar.getInstance();
@@ -243,6 +239,12 @@ public class Alarm extends Service {
 		{
 			nextAlarmTime.add(Calendar.DAY_OF_YEAR, 1);
 			//TODO: check if enough?
+		}
+		for (int i = 0; i < skipOccurrences; i++) {
+			nextAlarmTime.add(Calendar.DAY_OF_YEAR, 1);
+			while (!shouldFire(nextAlarmTime.get(Calendar.DAY_OF_WEEK))) {
+				nextAlarmTime.add(Calendar.DAY_OF_YEAR, 1);
+			}
 		}
 		int ndays = 0;
 		while(!shouldFire(nextAlarmTime.get(Calendar.DAY_OF_WEEK)))

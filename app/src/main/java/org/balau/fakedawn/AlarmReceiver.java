@@ -48,7 +48,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	//TODO: synchronized access?
 	private static WakeLock m_alarmWakeLock = null;
 	private static final long WAKE_LOCK_TIMEOUT_MILLIS = 1000*10;
-
+	static final String ACTION_SKIP_ALARM = "org.balau.fakedawn.AlarmReceiver.ACTION_SKIP_ALARM";
 	private void releaseWakeLock(boolean expectedHeld) {
 		if(AlarmReceiver.m_alarmWakeLock != null)
 		{
@@ -183,6 +183,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 			Log.d("FakeDawn", "ACTION_STOP_ALARM received.");
 			releaseWakeLock(true);
 			//TODO: stop service and activity?
+		}
+		else if(intent.getAction().equals(ACTION_SKIP_ALARM)) {
+			Log.d("FakeDawn", "ACTION_SKIP_ALARM received.");
+			Intent skipIntent = new Intent(context, Alarm.class);
+			skipIntent.putExtra("org.balau.fakedawn.Alarm.EXTRA_SKIP_NEXT", true);
+			context.startService(skipIntent);
 		}
 	}
 

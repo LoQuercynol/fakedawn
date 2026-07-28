@@ -1,46 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <!-- Nom de l'application -->
-        <string name="app_name">FakeDawn</string>
-
-        <!-- Activation globale -->
-        <string name="alarm_enabled">Alarma activada</string>
-        <string name="alarm_disabled">Alarma desactivada</string>
-
-        <!-- Sections -->
-        <string name="sunrise_schedule">Programación del amanecer</string>
-        <string name="repeat_days">Repetir días</string>
-        <string name="sound_vibration">Sonido y Vibración</string>
-        <string name="stop_method">Método de parada</string>
-
-        <!-- Délais d'aube -->
-        <string name="pre_dawn">Pre-amanecer</string>
-        <string name="post_dawn">Post-amanecer</string>
-        <string name="duration_format">%1$d min</string>
-
-        <!-- Jours de la semaine -->
-        <string name="day_mon">Lun</string>
-        <string name="day_tue">Mar</string>
-        <string name="day_wed">Mié</string>
-        <string name="day_thu">Jue</string>
-        <string name="day_fri">Vie</string>
-        <string name="day_sat">Sáb</string>
-        <string name="day_sun">Dom</string>
-
-        <!-- Son et Volume -->
-        <string name="enable_sound">Activar sonido</string>
-        <string name="select_ringtone">Seleccionar tono</string>
-        <string name="volume_label">Volumen</string>
-        <string name="vibration_on">Vibración activada</string>
-        <string name="vibration_off">Vibración desactivada</string>
-
-        <!-- Méthodes d'arrêt -->
-        <string name="stop_touch">Tocar pantalla para detener</string>
-        <string name="stop_button">Botón para detener</string>
-
-        <!-- Notifications et Toasts -->
-        <string name="fakedawn_clock">Reloj FakeDawn</string>
-        <string name="alarm_started">La alarma está en curso…</string>
-        <string name="toast_permission_overlay">Por favor, autorice el permiso de superposición de pantalla</string>
-        <string name="toast_permission_alarm">Por favor, autorice el permiso de alarmas exactas</string>
+<resources>
+    <string name="dismiss">Descartar</string>
+    <string name="alarm_enabled">La alarma está activada</string>
+    <string name="alarm_disabled">La alarma está desactivada</string>
+    <string name="sunrise_schedule">Programación del amanecer</string>
+    <string name="vibration_on">Vibración activada</string>
+    <string name="vibration_off">Vibración desactivada</string>
+    <string name="toast_permission_overlay">Por favor, autorice el permiso de superposición</string>
+    <string name="toast_permission_notification">Por favor, autorice el permiso de notificaciones</string>
+    <string name="toast_permission_alarm">Por favor, autorice el permiso de alarmas</string>
+    <string name="toast_permission_sound">Por favor, autorice el permiso de sonido</string>
+    <string name="toast_permission_vibrate">Por favor, autorice el permiso de vibración</string>
+    <string name="Mondays">Lunes</string>
+    <string name="Tuesdays">Martes</string>
+    <string name="Wednesdays">Miércoles</string>
+    <string name="Thursdays">Jueves</string>
+    <string name="Fridays">Viernes</string>
+    <string name="Saturdays">Sábados</string>
+    <string name="Sundays">Domingos</string>
+    <string name="Silent">Silencio</string>
+    <string name="Volume">Volumen</string>
+    <string name="Vibration">Vibración</string>
+    <string name="DismissMethod">Método de parada</string>
+    <string name="TouchTheScreen">Tocar la pantalla</string>
+    <string name="PressDismissButton">Pulsar el botón de parada</string>
+    <string name="buttonSave">Guardar</string>
+    <string name="Discard">Descartar</string>
+    <string name="Disactivated">Desactivado</string>
+    <string name="ActivatedWithSound">Activado con sonido</string>
+    <string name="sound_selected">Sonido seleccionado</string>
+    <string name="overlay_permission">Autorice la « Superposición » para que FakeDawn pueda iniciarse</string>
+    <string name="fakedawn_clock">Reloj FakeDawn</string>
+    <string name="alarm_started">La alarma está en curso...</string>
+    <string name="fakedawn_activated">FakeDawn activado</string>
+    <string name="next_alarm">Siguiente alarma: </string>
+    <string name="alarme_fakeDawn">Alarma FakeDawn</string>
+    <string name="No_week_day_selected">¡Ningún día seleccionado!</string>
+    <string name="skip">Saltar</string>
 </resources>

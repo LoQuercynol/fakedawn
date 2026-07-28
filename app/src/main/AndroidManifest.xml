@@ -53,6 +53,9 @@
             <intent-filter>
                 <action android:name="org.balau.fakedawn.AlarmReceiver.ACTION_STOP_ALARM"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="org.balau.fakedawn.AlarmReceiver.ACTION_SKIP_ALARM"/>
+            </intent-filter>
         </receiver>
         <receiver android:name=".InstallationReceiver" android:exported="true">
             <intent-filter>

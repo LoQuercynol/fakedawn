@@ -37,7 +37,8 @@
     <string name="fakedawn_clock">FakeDawn Clock</string>
     <string name="alarm_started">Alarme is running...</string>
     <string name="fakedawn_activated">FakeDawn Activated</string>
-    <string name="next_alarm">"Next alarm : "</string>
+    <string name="next_alarm">Next alarm : </string>
     <string name="alarme_fakeDawn">FakeDawn Alarm</string>
     <string name="No_week_day_selected">No week day selected!</string>
+    <string name="skip">Skip</string>
 </resources>
